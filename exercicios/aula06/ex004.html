@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formatando Strings</title>
+    <style>
+        body {
+            font: normal 20px Arial;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        var nome = window.prompt('Qual é seu nome?')
+
+        // writeln não ta funcionando para quebra de linha
+        document.write(`Olá, <strong>${nome}</strong>! Seu nome tem ${nome.length} letras.</br>`)
+
+        document.write(`Seu nome em maiúsculas é ${nome.toUpperCase()}</br>`)
+
+        document.write(`Seu nome em minúsculas é ${nome.toLowerCase()}`)
+
+        // (nome da variável).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+        // (nome da variável).toFixed(2) (para 2 casas decimais)
+        // (nome da variável).toFixed(x).replace(".", ",") trocar uma coisa pela outra
+    </script>
+
+</body>
+</html>

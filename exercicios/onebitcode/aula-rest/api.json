@@ -1,0 +1,34 @@
+{
+  "posts": [
+    {
+      "id": "7990",
+      "title": "Post 2",
+      "body": "Conteúdo do post 2"
+    },
+    {
+      "id": "f7b7",
+      "title": "Artigo 3",
+      "body": "Conteúdo do Artigo 3..."
+    },
+    {
+      "id": "aca0",
+      "title": "Novo",
+      "body": "Teste"
+    },
+    {
+      "id": "2ee7",
+      "title": "Post de teste",
+      "body": "Testando a exibição dos posts!"
+    },
+    {
+      "id": "2739",
+      "title": "Mais um post",
+      "body": "Testando"
+    },
+    {
+      "id": "bac8",
+      "title": "fhgdgd",
+      "body": "dgfdg"
+    }
+  ]
+}

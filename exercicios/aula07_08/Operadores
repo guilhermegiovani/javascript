@@ -1,0 +1,39 @@
+<!--
+Ordem Operadores
+
+    1º - Operadores Aritméticos
+    2º - Operadores Relacionais
+    3º - Operadores Lógicos
+    4º - Operadores Ternário
+
+Ordem de Execução (Operadores Aritméticos)
+    1º - ()
+    2º - **
+    3º - % / *
+    4º - + -
+
+Ordem de Execução (Operadores Relacionais)
+    Não tem ordem
+
+Ordem de Execução (Operadores Lógicos)
+
+    1º - ! (negação/não/diferente)
+        True -> False
+        Flase -> True
+
+    2º - && (conjunção/e)
+        True && True -> True
+        True && False -> False
+        False && True -> False
+        False && False -> False
+
+    3º - || (disjunção/ou)
+        True || True -> True
+        True || False -> True
+        False || True -> True
+        False || False -> False
+
+Ordem de Execução (Operador Ternário)
+    1º - ? -> True
+    2º - : -> False
+-->

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+
+    <style>
+        .label {
+            margin: 0.5rem;
+        }
+
+        .concluido {
+            color: #1f871f;
+            font-style: italic;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minha lista de Tarefas</h1>
+
+    <form id="formTarefas">
+        <input type="text" id="tarefa" placeholder="Adicionar nova tarefa">
+        <button type="submit">Adicionar Tarefa</button>
+    </form>
+
+    <hr>
+
+    <h2>Lista de Tarefas</h2>
+
+    <section id="ListaTarefas"></section>
+
+    <script src="index.js"></script>
+</body>
+</html>

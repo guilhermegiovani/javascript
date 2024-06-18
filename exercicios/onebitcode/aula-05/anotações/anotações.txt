@@ -1,0 +1,27 @@
+Fila: O primeiro a entrar é o primeiro a sair
+Pilha: O primeiro a entrar é o último a sair
+
+push(): Adiciona elementos no fim do array
+pop(): Remove o último elemento do array
+shift(): Remove o primeiro elemento do array
+unshift(): Adiciona elementos no começo do array
+
+concat(): Combina dois ou mais arrays em um
+join(): Junta os elementos em uma string
+split(): Divide string em array
+slice(): Retorna uma cópia de um pedaço do array
+splice(): Altera o conteúdo de um array. adicionando, removendo ou substituindo elementos
+
+forEach(): Executa uma função para cada elemento do array
+
+map(): Cria um novo array com os resultados da aplicação de uma mesma função a cada elemento do array original
+
+filter(): Cria um novo array com todos os elementos que passam em um teste especificado por uma função
+
+find(): Retorna o primeiro elemento no array que satisfaz uma condição especificada por uma função
+
+Lista de outros métodos de arrays para pesquisar:
+- some                  - fill
+- every                 - findIndex
+- sort                  - includes
+- reduce                - flat

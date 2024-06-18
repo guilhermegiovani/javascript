@@ -1,0 +1,9 @@
+Exemplo de API RESTfull
+
+Recursos "Artigos
+
+- GET      /artigos              obtém uma lista de artigos
+- POST     /artigos              salva um novo artigo na lista de artigos
+- GET      /artigos/artigo-3     obtém um artigo específico
+- PUT      /artigos/artigo-3     atualiza os dados de um artigo específico
+- DELETE   /artigos/artigo-3     exclui um artigo específico

@@ -1,0 +1,17 @@
+{
+  "name": "letras-maiusculas",
+  "version": "1.0.0",
+  "description": "aula 4, exercicio 12",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Guilherme Nobre",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

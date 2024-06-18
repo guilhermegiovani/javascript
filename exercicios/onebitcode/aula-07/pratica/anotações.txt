@@ -1,0 +1,7 @@
+setTimeout() - Executa uma função após uma quantidade determinada de tempo (em milissegundos)
+
+setInterval() - Executa uma função várias vezes em intervalos fixos de tempo (em milissegundos)
+
+promise.then - Sucesso
+promise.catch - Erro/Falha
+promise.finally - Finalizada (Independendo de sucesso ou falha)
