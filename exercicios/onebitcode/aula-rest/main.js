@@ -5,6 +5,7 @@ Criar um botão para EXCLUIR post e um botão para EDITAR post.
 const postForm = document.getElementById("postForm")
 const titleInput = document.getElementById("title")
 const bodyInput = document.getElementById("body")
+const buttonPost = document.getElementById("buttonPost")
 const postsList = document.getElementById("postsList")
 
 carregarPosts()
@@ -56,6 +57,22 @@ function exibirPosts(posts) {
 
     postsList.appendChild(listItem)
   })
+}
+
+async function editarPost(title, body) {
+  const resposta = await fetch("http://localhost:3000/posts", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ title, body })
+  })
+
+  if(!resposta.ok) {
+    console.error(`Um erro ocorreu! ${resposta.status} - ${resposta.statusText}`)
+  } else {
+    carregarPosts()
+  }
 }
 
 
