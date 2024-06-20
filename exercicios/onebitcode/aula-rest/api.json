@@ -1,34 +1,24 @@
 {
   "posts": [
     {
-      "id": "7990",
+      "id": "a9c5",
       "title": "Post 2",
-      "body": "Conteúdo do post 2"
+      "body": "Conteúdo Post 2"
     },
     {
-      "id": "f7b7",
-      "title": "Artigo 3",
-      "body": "Conteúdo do Artigo 3..."
+      "id": "bb34",
+      "title": "Post 3",
+      "body": "Conteúdo Post 3"
     },
     {
-      "id": "aca0",
-      "title": "Novo",
-      "body": "Teste"
+      "id": "1577",
+      "title": "Post 4",
+      "body": "Conteúdo post 4"
     },
     {
-      "id": "2ee7",
-      "title": "Post de teste",
-      "body": "Testando a exibição dos posts!"
-    },
-    {
-      "id": "2739",
-      "title": "Mais um post",
-      "body": "Testando"
-    },
-    {
-      "id": "bac8",
-      "title": "fhgdgd",
-      "body": "dgfdg"
+      "id": "541d",
+      "title": "Post 5",
+      "body": "Conteúdo do post 5"
     }
   ]
 }

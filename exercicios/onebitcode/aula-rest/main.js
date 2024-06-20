@@ -20,7 +20,10 @@ postForm.addEventListener("submit", function(event) {
 
   titleInput.value = ""
   bodyInput.value = ""
+
 })
+
+postForm.removeEventListener
 
 async function criarPost(title, body) {
   const resposta = await fetch("http://localhost:3000/posts", {
@@ -53,9 +56,85 @@ function exibirPosts(posts) {
 
   posts.forEach(function (post) {
     const listItem = document.createElement("li")
-    listItem.innerHTML = `<article> <h3>${post.title}</h3> <p>${post.body}</p> </article> <hr>`
+    const hr = document.createElement("hr")
+    const buttonEditar = document.createElement("button")
+    let buttonDeletar = document.createElement("button")
+    // const postId = post.id
+    // const buttonConfirmar = document.createElement("button")
 
-    postsList.appendChild(listItem)
+    buttonEditar.innerHTML = "Editar"
+    buttonEditar.style.marginTop = "15px"
+    buttonEditar.style.marginRight = "5px"
+    // buttonConfirmar.style.marginTop = "15px"
+
+    buttonDeletar.innerHTML = "Deletar"
+
+    // buttonConfirmar.innerHTML = "Confirmar Edição"
+    // buttonConfirmar.style.display = "none"
+    // buttonConfirmar.type = "submit"
+
+    listItem.innerHTML = `<article> <h3>${post.title}</h3> <p>${post.body}</p> </article>`
+
+    postsList.append(listItem, buttonEditar, buttonDeletar, hr)
+    // postForm.appendChild(buttonConfirmar)
+
+    buttonEditar.addEventListener("click", function(event) {
+      event.preventDefault()
+
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      })
+
+      titleInput.value = post.title
+      bodyInput.value = post.body
+
+      buttonPost.innerHTML = "Confirmar Edição"
+
+      postForm.addEventListener("submit", function(event) {
+        event.preventDefault()
+        
+        // post.title = titleInput.value
+        // post.body = bodyInput.value
+
+        const title = titleInput.value
+        const body = bodyInput.value
+        
+        editarPost(title, body)
+      })
+
+      // buttonConfirmar.style.display = "inline-block"
+      // buttonPost.style.display = "none"
+      // buttonEditar.style.display = "none"
+
+      // buttonConfirmar.addEventListener("submit", function(event) {
+      //   event.preventDefault()
+
+      //   const title = titleInput.value
+      //   const body = bodyInput.value
+
+      //   editarPost(title, body)
+
+      //   buttonConfirmar.style.display = "none"
+      //   buttonPost.style.display = "inline-block"
+      //   buttonEditar.style.display = "inline-block"
+
+      // })
+
+      
+    })
+
+    buttonDeletar.addEventListener("click", function(event) {
+      event.preventDefault()
+
+      buttonDeletar = post.id
+
+      deletarPost()
+
+      // location.reload()
+    })
+
   })
 }
 
@@ -73,6 +152,19 @@ async function editarPost(title, body) {
   } else {
     carregarPosts()
   }
+}
+
+async function deletarPost() {
+  const resposta = await fetch(`http://localhost:3000/posts`, {
+    method: "DELETE",
+    body: JSON.stringify({ title, body })
+  })
+
+  // if(!resposta.ok) {
+  //   console.error("Erro ao deletar post!")
+  // } else {
+  //   console.warn("O post foi deletado! Atualize a página!")
+  // }
 }
 
 
