@@ -58,7 +58,7 @@ function exibirPosts(posts) {
     const listItem = document.createElement("li")
     const hr = document.createElement("hr")
     const buttonEditar = document.createElement("button")
-    let buttonDeletar = document.createElement("button")
+    const buttonDeletar = document.createElement("button")
     // const postId = post.id
     // const buttonConfirmar = document.createElement("button")
 
@@ -127,8 +127,6 @@ function exibirPosts(posts) {
 
     buttonDeletar.addEventListener("click", function(event) {
       event.preventDefault()
-
-      buttonDeletar = post.id
 
       deletarPost()
 
