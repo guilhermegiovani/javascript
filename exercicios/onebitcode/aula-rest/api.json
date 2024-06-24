@@ -6,9 +6,9 @@
       "body": "Conteúdo Post 2"
     },
     {
-      "id": "bb34",
       "title": "Post 3",
-      "body": "Conteúdo Post 3"
+      "body": "Conteúdo post 3",
+      "id": "bb34"
     },
     {
       "id": "1577",
@@ -16,14 +16,14 @@
       "body": "Conteúdo post 4"
     },
     {
-      "id": "541d",
-      "title": "Post 5",
-      "body": "Conteúdo do post 5"
+      "title": "post 7",
+      "body": "artigo 7",
+      "id": "541d"
     },
     {
-      "id": "db10",
-      "title": "Post 2 edit",
-      "body": "Conteúdo Post 2 edit"
+      "id": "f611",
+      "title": "post 6",
+      "body": "artigo 6"
     }
   ]
 }

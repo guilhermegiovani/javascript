@@ -6,24 +6,39 @@ const postForm = document.getElementById("postForm")
 const titleInput = document.getElementById("title")
 const bodyInput = document.getElementById("body")
 const buttonPost = document.getElementById("buttonPost")
+// const buttonConfirmar = document.getElementById("buttonConfirmar")
 const postsList = document.getElementById("postsList")
 
 carregarPosts()
 
-postForm.addEventListener("submit", function(event) {
+
+
+// postForm.addEventListener("submit", function(event) {
+//   event.preventDefault()
+
+//   const title = titleInput.value
+//   const body = bodyInput.value
+
+//   console.log("Criado!")
+
+//   titleInput.value = ""
+//   bodyInput.value = ""
+
+//   removeEventCriar()
+
+// })
+
+postForm.addEventListener("submit", (event) => {
   event.preventDefault()
 
-  const title = titleInput.value
-  const body = bodyInput.value
+  criar()
 
-  criarPost(title, body)
-
-  titleInput.value = ""
-  bodyInput.value = ""
-
+  
 })
 
-postForm.removeEventListener
+function criar() {
+  console.log("Criado!")
+}
 
 async function criarPost(title, body) {
   const resposta = await fetch("http://localhost:3000/posts", {
@@ -92,17 +107,34 @@ function exibirPosts(posts) {
 
       buttonPost.innerHTML = "Confirmar Edição"
 
-      postForm.addEventListener("submit", function(event) {
-        event.preventDefault()
+      // postForm.addEventListener("submit", function(event) {
+      //   event.preventDefault()
         
-        // post.title = titleInput.value
-        // post.body = bodyInput.value
+      //   // post.title = titleInput.value
+      //   // post.body = bodyInput.value
 
-        const title = titleInput.value
-        const body = bodyInput.value
+      //   // const title = titleInput.value
+      //   // const body = bodyInput.value
         
-        editarPost(title, body)
+      //   // editarPost(title, body)
+
+      //   console.log("Editado!")
+
+      //   buttonPost.innerHTML = "Criar Post"
+
+      //   removeEventEditar()
+      // })
+
+      removeEventCriar()
+
+      postForm.addEventListener("submit", (event) => {
+        event.preventDefault()
+
+        editar
+
+        removeEventEditar()
       })
+
 
       // buttonConfirmar.style.display = "inline-block"
       // buttonPost.style.display = "none"
@@ -130,14 +162,14 @@ function exibirPosts(posts) {
 
       deletarPost()
 
-      // location.reload()
+      location.reload()
     })
 
   })
 }
 
 async function editarPost(title, body) {
-  const resposta = await fetch("http://localhost:3000/posts", {
+  const resposta = await fetch("http://localhost:3000/posts/541d", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
@@ -165,9 +197,45 @@ async function deletarPost() {
   // }
 }
 
+function removeEventCriar() {
+  postForm.removeEventListener('click', criar())
+
+  // postForm.removeEventListener('click', function(event) {
+  //   event.preventDefault()
+  
+  //   const title = titleInput.value
+  //   const body = bodyInput.value
+  
+  //   console.log("Criado!")
+  
+  //   titleInput.value = ""
+  //   bodyInput.value = ""
+  // })
+}
+
+function removeEventEditar() {
+  postForm.removeEventListener('click', editar())
 
 
+  // postForm.removeEventListener('click', function(event) {
+  //   event.preventDefault()
+    
+  //   // post.title = titleInput.value
+  //   // post.body = bodyInput.value
 
+  //   // const title = titleInput.value
+  //   // const body = bodyInput.value
+    
+  //   // editarPost(title, body)
+
+  //   console.log("Editado!")
+  // })
+}
+
+
+function editar() {
+  console.log("Editar!")
+}
 
 
 
