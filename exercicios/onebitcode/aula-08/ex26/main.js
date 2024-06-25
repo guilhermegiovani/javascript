@@ -17,57 +17,58 @@ async function exibirUsers() {
   dados.forEach(function(user) {
     const listElement = document.createElement("li")
 
+    listElement.style.fontFamily = "Arial"
     listElement.innerHTML = 
     `<article>
-      <p>
-        Id: ${user.id}
+      <p style="font-size: 14px;">
+        <strong style="font-size: 17px;">Nome:</strong> ${user.name}
       </p>
 
-      <p>
-        Nome: ${user.name}
+      <p style="font-size: 14px;">
+        <strong style="font-size: 17px;">Nome de Usuário:</strong> ${user.username}
       </p>
 
-      <p>
-        Nome de Usuário: ${user.username}
+      <p style="font-size: 14px;">
+        <strong style="font-size: 17px;">Id:</strong> ${user.id}
       </p>
 
-      <p>
-        Email: ${user.email}
+      <p style="font-size: 14px;">
+        <strong style="font-size: 17px;">Email:</strong> ${user.email}
       </p>
 
-      <p>
-        Telefone: ${user.phone}
+      <p style="font-size: 14px;">
+        <strong style="font-size: 17px;">Telefone:</strong> ${user.phone}
       </p>
 
-      <p>
-        Site: ${user.website}
+      <p style="font-size: 14px;">
+        <strong style="font-size: 17px;">Site:</strong> ${user.website}
       </p>
 
-      <p>
-        Endereço: 
+      <p style="font-size: 14px;">
+        <strong style="font-size: 17px;">Endereço:</strong> 
 
         <ul>
 
           <li style="list-style: disc;">
 
-            <p>
-              <strong>Cidade:</strong> ${user.address.city}
+            <p style="font-size: 14px;">
+              <strong style="font-size: 16px;">Cidade:</strong> ${user.address.city}
             </p>
 
-            <p>
-              Rua: ${user.address.street}
+            <p style="font-size: 14px;">
+              <strong style="font-size: 16px;">Rua:</strong> ${user.address.street}
             </p>
 
-            <p>
-              Suíte: ${user.address.suite}
+            <p style="font-size: 14px;">
+              <strong style="font-size: 16px;">Suíte:</strong> ${user.address.suite}
             </p>
 
-            <p>
-              Código Postal: ${user.address.zipcode}
+            <p style="font-size: 14px;">
+              <strong style="font-size: 16px;">Código Postal:</strong> ${user.address.zipcode}
             </p>
 
-            <p>
-              Geográfico: Lat (${user.address.geo.lat}) / Lng (${user.address.geo.lng})
+            <p style="font-size: 14px;">
+              <strong style="font-size: 16px;">Geográfico:</strong> Lat (${user.address.geo.lat}) / Lng (${user.address.geo.lng})
             </p>
 
           </li>
@@ -75,10 +76,31 @@ async function exibirUsers() {
         </ul>
       </p>
 
-      <p>
+      <p style="font-size: 14px;">
+        <strong style="font-size: 17px;">Empresa:</strong>
 
+        <ul>
+
+          <li style="list-style: disc;">
+
+            <p style="font-size: 14px;">
+              <strong style="font-size: 16px;">Nome:</strong> ${user.company.name}
+            </p>
+
+            <p style="font-size: 14px;">
+              <strong style="font-size: 16px;">CatchPhrase:</strong> ${user.company.catchPhrase}
+            </p>
+
+            <p style="font-size: 14px;">
+              <strong style="font-size: 16px;">Bs:</strong> ${user.company.bs}
+            </p>
+
+          </li>
+
+        </ul>
       </p>
-      </article>`
+
+      </article> <hr style="margin-bottom: 25px;">`
 
     postsList.append(listElement)
 
