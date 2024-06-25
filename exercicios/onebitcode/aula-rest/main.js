@@ -24,16 +24,15 @@ carregarPosts()
 //   titleInput.value = ""
 //   bodyInput.value = ""
 
-//   removeEventCriar()
 
 // })
 
 postForm.addEventListener("submit", (event) => {
   event.preventDefault()
 
-  criar()
+  criarPost(title, body)
 
-  
+  removeEventCriar()
 })
 
 function criar() {
@@ -125,12 +124,12 @@ function exibirPosts(posts) {
       //   removeEventEditar()
       // })
 
-      removeEventCriar()
+      
 
       postForm.addEventListener("submit", (event) => {
         event.preventDefault()
 
-        editar
+        editarPost(title, body)
 
         removeEventEditar()
       })
@@ -169,7 +168,7 @@ function exibirPosts(posts) {
 }
 
 async function editarPost(title, body) {
-  const resposta = await fetch("http://localhost:3000/posts/541d", {
+  const resposta = await fetch("http://localhost:3000/posts/a9c5", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
@@ -198,38 +197,37 @@ async function deletarPost() {
 }
 
 function removeEventCriar() {
-  postForm.removeEventListener('click', criar())
+  // postForm.removeEventListener('click', criarPost(title, body))
 
-  // postForm.removeEventListener('click', function(event) {
-  //   event.preventDefault()
+  postForm.removeEventListener('click', function(event) {
+    event.preventDefault()
   
-  //   const title = titleInput.value
-  //   const body = bodyInput.value
+    const title = titleInput.value
+    const body = bodyInput.value
   
-  //   console.log("Criado!")
+    criarPost(title, body)
   
-  //   titleInput.value = ""
-  //   bodyInput.value = ""
-  // })
+    titleInput.value = ""
+    bodyInput.value = ""
+  })
 }
 
 function removeEventEditar() {
-  postForm.removeEventListener('click', editar())
+  // postForm.removeEventListener('click', editarPost(title, body))
 
 
-  // postForm.removeEventListener('click', function(event) {
-  //   event.preventDefault()
+  postForm.removeEventListener('click', function(event) {
+    event.preventDefault()
     
-  //   // post.title = titleInput.value
-  //   // post.body = bodyInput.value
+    // post.title = titleInput.value
+    // post.body = bodyInput.value
 
-  //   // const title = titleInput.value
-  //   // const body = bodyInput.value
+    const title = titleInput.value
+    const body = bodyInput.value
     
-  //   // editarPost(title, body)
 
-  //   console.log("Editado!")
-  // })
+    editarPost(title, body)
+  })
 }
 
 

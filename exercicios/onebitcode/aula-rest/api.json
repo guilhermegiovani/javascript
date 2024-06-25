@@ -1,11 +1,6 @@
 {
   "posts": [
     {
-      "id": "a9c5",
-      "title": "Post 2",
-      "body": "Conteúdo Post 2"
-    },
-    {
       "title": "Post 3",
       "body": "Conteúdo post 3",
       "id": "bb34"
@@ -16,14 +11,14 @@
       "body": "Conteúdo post 4"
     },
     {
-      "title": "post 7",
-      "body": "artigo 7",
-      "id": "541d"
-    },
-    {
       "id": "f611",
       "title": "post 6",
       "body": "artigo 6"
+    },
+    {
+      "id": "bb8a",
+      "title": {},
+      "body": {}
     }
   ]
 }
