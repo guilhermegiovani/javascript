@@ -11,10 +11,14 @@
 
   <form id="livroForm">
     <label for="nomeLivro">Qual livro você deseja adicionar á sua lista de leitura?</label> <br>
-    <input type="text" placeholder="Digite o nome do livro aqui!" id="nomeLivro">
+    <input type="text" id="nomeLivro" placeholder="Digite o nome do livro aqui!" required>
 
-    <button>Adicionar Livro</button>
+    <button type="submit" id="buttonAdd">Adicionar Livro</button>
   </form>
+
+  <h2>Lista de Leitura</h2>
+
+  <ul id="listLivro"></ul>
 
   <script type="module" src="main.js"></script>
 </body>
