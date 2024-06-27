@@ -7,4 +7,3 @@ Recursos "Artigos
 - GET      /artigos/artigo-3     obtém um artigo específico
 - PUT      /artigos/artigo-3     atualiza os dados de um artigo específico
 - DELETE   /artigos/artigo-3     exclui um artigo específico
-
