@@ -7,6 +7,8 @@ const livroInput = document.getElementById("nomeLivro")
 const buttonAdd = document.getElementById("buttonAdd")
 const listLivro = document.getElementById("listLivro")
 
+// let urlId = new URLSearchParams(window.location.search)
+
 carregarLivros()
 
 livroForm.addEventListener("submit", (event) => {
@@ -53,6 +55,9 @@ function exibirLivros(livros) {
     const hr = document.createElement("hr")
     const btnEditar = document.createElement("button")
     const btnExcluir = document.createElement("button")
+    // const btnConcluir = document.createElement("button")
+
+    // urlId.set('id', `${livro.id}`)
 
     btnEditar.innerHTML = "Editar"
     btnExcluir.innerHTML = "Excluir"
@@ -68,22 +73,24 @@ function exibirLivros(livros) {
 
       excluirLivro()
 
-      
     })
   })
 }
 
+
+
 async function excluirLivro() {
-  const response = await fetch(`http://localhost:3000/livros`, {
+  const response = await fetch('http://localhost:3000/livros', {
     method: "DELETE"
   })
 
   if(!response.ok) {
     console.error(`Ocorreu um erro ao excluir o livro da lista! ${response.status} - ${response.statusText}`)
   } else {
-    location.reload()
+    console.warn("O livro foi excluído da lista com sucesso!")
+    
+    setTimeout(() => {
+      location.reload()
+    }, 3000)
   }
-  // else {
-  //   console.warn("O livro foi excluído da lista com sucesso!")
-  // }
 }
