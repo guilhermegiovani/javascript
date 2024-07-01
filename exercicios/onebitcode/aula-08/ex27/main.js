@@ -56,7 +56,7 @@ function exibirLivros(livros) {
 
   livros.forEach(function (livro) {
     const liElement = document.createElement("li")
-    const article = document.createElement("div")
+    const article = document.createElement("article")
     const hr = document.createElement("hr")
     const btnEditar = document.createElement("button")
     const btnExcluir = document.createElement("button")
