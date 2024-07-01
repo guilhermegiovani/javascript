@@ -7,4 +7,39 @@
 #nomeLivro {
     width: 370px;
     margin-top: 5px;
+    padding: .3rem .6rem;
+}
+
+button {
+    background-color: #FDFDFD;
+    color: #102F5e;
+    border: 2px solid #102F5e;
+    cursor: pointer;
+    padding: .3rem .6rem;
+}
+
+button:hover {
+    background-color: #102F5e;
+    color: #fff;
+}
+
+button:hover > i {
+    color: #fff;
+}
+
+button i {
+    color: #102F5e;
+    font-weight: bold;
+    pointer-events: none;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+.hiden {
+    display: none;
+}
+
+.concluido {
+    text-decoration: line-through;
 }

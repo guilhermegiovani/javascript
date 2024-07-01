@@ -16,9 +16,13 @@ livroForm.addEventListener("submit", (event) => {
 
   const livro = livroInput.value
 
-  addLivro(livro)
+  
+  if (livro) {
+    addLivro(livro)
+  }
 
   livroInput.value = ""
+  livroInput.focus()
 
 })
 
@@ -52,32 +56,45 @@ function exibirLivros(livros) {
 
   livros.forEach(function (livro) {
     const liElement = document.createElement("li")
+    const article = document.createElement("div")
     const hr = document.createElement("hr")
     const btnEditar = document.createElement("button")
     const btnExcluir = document.createElement("button")
-    // const btnConcluir = document.createElement("button")
+    const btnConcluir = document.createElement("button")
 
     // urlId.set('id', `${livro.id}`)
 
-    btnEditar.innerHTML = "Editar"
-    btnExcluir.innerHTML = "Excluir"
+    btnEditar.innerHTML = '<i class="fa-solid fa-pen"></i>'
+    btnExcluir.innerHTML = '<i class="fa-solid fa-xmark"></i>'
+    btnConcluir.innerHTML = '<i class="fa-solid fa-check"></i>'
+
+    btnConcluir.classList.add("concluir")
+    btnEditar.classList.add("editar")
+    btnExcluir.classList.add("excluir")
 
     btnEditar.style.marginRight = "5px"
+    btnConcluir.style.marginRight = "5px"
 
-    liElement.innerHTML = `<article> <p> ${livro.nomeLivro} </p> <article>`
+    article.innerHTML = `<p> ${livro.nomeLivro} </p>`
+    liElement.classList.add("livro")
+    
+    liElement.appendChild(article)
+    listLivro.append(liElement, btnConcluir, btnEditar, btnExcluir, hr)
 
-    listLivro.append(liElement, btnEditar, btnExcluir, hr)
+    // btnExcluir.addEventListener("click", (event) => {
+    //   event.preventDefault()
 
-    btnExcluir.addEventListener("click", (event) => {
-      event.preventDefault()
+    //   excluirLivro()
 
-      excluirLivro()
-
-    })
+    // })
   })
 }
 
+/* Editar */
 
+// async function editarLivro(livro) {}
+
+/* Excluir */
 
 async function excluirLivro() {
   const response = await fetch('http://localhost:3000/livros', {
@@ -94,3 +111,13 @@ async function excluirLivro() {
     }, 3000)
   }
 }
+
+
+document.addEventListener("click", (e) => {
+  const targetEl = e.target
+  const parentEl = targetEl.closest("div")
+
+  if(targetEl.classList.contains("concluir")) {
+    parentEl.classList.toggle("concluido")
+  }
+})
