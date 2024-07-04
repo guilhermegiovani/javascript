@@ -6,6 +6,8 @@ const livroForm = document.getElementById("livroForm")
 const livroInput = document.getElementById("nomeLivro")
 const buttonAdd = document.getElementById("buttonAdd")
 const listLivro = document.getElementById("listLivro")
+const editForm = document.getElementById("editForm")
+let url = "http://localhost:3000/livros"
 
 // let urlId = new URLSearchParams(window.location.search)
 
@@ -16,10 +18,7 @@ livroForm.addEventListener("submit", (event) => {
 
   const livro = livroInput.value
 
-  
-  if (livro) {
-    addLivro(livro)
-  }
+  addLivro(livro)
 
   livroInput.value = ""
   livroInput.focus()
@@ -27,7 +26,7 @@ livroForm.addEventListener("submit", (event) => {
 })
 
 async function addLivro(nomeLivro) {
-  const response = await fetch("http://localhost:3000/livros", {
+  const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -43,7 +42,7 @@ async function addLivro(nomeLivro) {
 }
 
 async function carregarLivros() {
-  const response = await fetch("http://localhost:3000/livros")
+  const response = await fetch(url)
   const livros = await response.json()
 
   console.log(livros)
@@ -54,15 +53,13 @@ async function carregarLivros() {
 function exibirLivros(livros) {
   listLivro.innerHTML = ""
 
-  livros.forEach(function (livro) {
+  livros.map(function (livro) {
     const liElement = document.createElement("li")
     const article = document.createElement("article")
     const hr = document.createElement("hr")
     const btnEditar = document.createElement("button")
     const btnExcluir = document.createElement("button")
     const btnConcluir = document.createElement("button")
-
-    // urlId.set('id', `${livro.id}`)
 
     btnEditar.innerHTML = '<i class="fa-solid fa-pen"></i>'
     btnExcluir.innerHTML = '<i class="fa-solid fa-xmark"></i>'
@@ -71,6 +68,7 @@ function exibirLivros(livros) {
     btnConcluir.classList.add("concluir")
     btnEditar.classList.add("editar")
     btnExcluir.classList.add("excluir")
+    
 
     btnEditar.style.marginRight = "5px"
     btnConcluir.style.marginRight = "5px"
@@ -81,43 +79,99 @@ function exibirLivros(livros) {
     liElement.appendChild(article)
     listLivro.append(liElement, btnConcluir, btnEditar, btnExcluir, hr)
 
-    // btnExcluir.addEventListener("click", (event) => {
-    //   event.preventDefault()
+    // Excluir
 
-    //   excluirLivro()
+    btnExcluir.addEventListener("click", (event) => {
+      event.preventDefault()
 
-    // })
+      excluirLivro()
+
+    })
+
+    async function excluirLivro() {
+      const response = await fetch(`${url}/${livro.id}`, {
+        method: "DELETE"
+      })
+    
+      if(!response.ok) {
+        console.error(`Ocorreu um erro ao excluir o livro da lista! ${response.status} - ${response.statusText}`)
+      } else {
+        console.warn("O livro foi excluído da lista com sucesso!")
+        
+        setTimeout(() => {
+          location.reload()
+        }, 3000)
+      }
+    }
+
+    // Editar
+
+    btnEditar.addEventListener('click', (e) => {
+      e.preventDefault()
+
+      editForm.classList.remove("hiden")
+
+      livroInput.value = livro.nomeLivro
+    })
+
+    editForm.addEventListener('submit', (e) => {
+      e.preventDefault()
+
+      const livro = livroInput.value
+
+      editarLivro(livro)
+
+      // livroInput.value = ""
+
+    })
+
+    async function editarLivro(nomeLivro) {
+      const response = await fetch(`${url}/${livro.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ nomeLivro })
+      })
+
+      if(!response.ok) {
+        console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
+      } else {
+        console.warn("O livro foi editado com sucesso!")
+      }
+    }
+
   })
 }
 
 /* Editar */
 
-// async function editarLivro(livro) {}
 
-/* Excluir */
+// async function excluirLivro() {
 
-async function excluirLivro() {
-  const response = await fetch('http://localhost:3000/livros', {
-    method: "DELETE"
-  })
+//   const response = await fetch(`${url}`, {
+//     method: "DELETE"
+//   })
 
-  if(!response.ok) {
-    console.error(`Ocorreu um erro ao excluir o livro da lista! ${response.status} - ${response.statusText}`)
-  } else {
-    console.warn("O livro foi excluído da lista com sucesso!")
+//   // console.log(livroId)
+
+//   if(!response.ok) {
+//     console.error(`Ocorreu um erro ao excluir o livro da lista! ${response.status} - ${response.statusText}`)
+//   } else {
+//     console.warn("O livro foi excluído da lista com sucesso!")
     
-    setTimeout(() => {
-      location.reload()
-    }, 3000)
-  }
-}
+//     setTimeout(() => {
+//       location.reload()
+//     }, 3000)
+//   }
+// }
 
 
-document.addEventListener("click", (e) => {
-  const targetEl = e.target
-  const parentEl = targetEl.closest("div")
+// document.addEventListener("click", (e) => {
+//   const targetEl = e.target
+//   const parentEl = targetEl.closest("div")
 
-  if(targetEl.classList.contains("concluir")) {
-    parentEl.classList.toggle("concluido")
-  }
-})
+//   if(targetEl.classList.contains("concluir")) {
+//     parentEl.classList.toggle("concluido")
+//   }
+// })

@@ -43,3 +43,7 @@ button i {
 .concluido {
     text-decoration: line-through;
 }
+
+#btnEditar {
+    margin-top: 5px;
+}
