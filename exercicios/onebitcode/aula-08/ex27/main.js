@@ -7,7 +7,10 @@ const livroInput = document.getElementById("nomeLivro")
 const buttonAdd = document.getElementById("buttonAdd")
 const listLivro = document.getElementById("listLivro")
 const editForm = document.getElementById("editForm")
+const btnEdit = document.getElementById("btnEdit")
+let editInput = document.getElementById("editInput")
 let url = "http://localhost:3000/livros"
+let livroId
 
 // let urlId = new URLSearchParams(window.location.search)
 
@@ -53,13 +56,14 @@ async function carregarLivros() {
 function exibirLivros(livros) {
   listLivro.innerHTML = ""
 
-  livros.map(function (livro) {
+  livros.forEach(function (livro) {
     const liElement = document.createElement("li")
-    const article = document.createElement("article")
+    // const article = document.createElement("article")
     const hr = document.createElement("hr")
     const btnEditar = document.createElement("button")
     const btnExcluir = document.createElement("button")
     const btnConcluir = document.createElement("button")
+    livroId = livro.id
 
     btnEditar.innerHTML = '<i class="fa-solid fa-pen"></i>'
     btnExcluir.innerHTML = '<i class="fa-solid fa-xmark"></i>'
@@ -73,10 +77,9 @@ function exibirLivros(livros) {
     btnEditar.style.marginRight = "5px"
     btnConcluir.style.marginRight = "5px"
 
-    article.innerHTML = `<p> ${livro.nomeLivro} </p>`
+    liElement.innerHTML = `<article> <p> ${livro.nomeLivro} </p> </article>`
     liElement.classList.add("livro")
     
-    liElement.appendChild(article)
     listLivro.append(liElement, btnConcluir, btnEditar, btnExcluir, hr)
 
     // Excluir
@@ -110,42 +113,85 @@ function exibirLivros(livros) {
       e.preventDefault()
 
       editForm.classList.remove("hiden")
+      livroForm.classList.add("hiden")
 
-      livroInput.value = livro.nomeLivro
+      editInput.value = livro.nomeLivro
     })
 
-    editForm.addEventListener('submit', (e) => {
-      e.preventDefault()
+    // btnEdit.addEventListener('click', (e) => {
+    //   e.preventDefault()
+      
+    //   const livro = editInput.value
+      
+    //   editarLivro(livro)
+      
+    //   // livroInput.value = ""
 
-      const livro = livroInput.value
+    // })
 
-      editarLivro(livro)
+    // async function editarLivro(nomeLivro) {
+    //   const response = await fetch(`${url}/${livro.id}`, {
+    //     method: "PUT",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({ nomeLivro })
+    //   })
 
-      // livroInput.value = ""
+    //   if(!response.ok) {
+    //     console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
+    //   } else {
+    //     console.warn("O livro foi editado com sucesso!")
 
-    })
+    //     setTimeout(() => {
+    //       location.reload()
+    //     }, 2000);
+    //   }
+    // }
 
-    async function editarLivro(nomeLivro) {
-      const response = await fetch(`${url}/${livro.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ nomeLivro })
-      })
-
-      if(!response.ok) {
-        console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
-      } else {
-        console.warn("O livro foi editado com sucesso!")
-      }
-    }
-
+    
   })
+
+  
 }
 
 /* Editar */
 
+btnEdit.addEventListener('click', (e) => {
+  e.preventDefault()
+  
+  const livro = editInput.value
+  
+  editarLivro(livro)
+
+  editForm.classList.add("hiden")
+  livroForm.classList.remove("hiden")
+  
+  // livroInput.value = ""
+
+})
+
+async function editarLivro(nomeLivro) {
+  const response = await fetch(`${url}/${livroId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ nomeLivro })
+  })
+
+  if(!response.ok) {
+    console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
+  } else {
+    console.warn("O livro foi editado com sucesso!")
+
+    setTimeout(() => {
+      location.reload()
+    }, 2000);
+  }
+}
+
+/* Excluir */
 
 // async function excluirLivro() {
 
@@ -159,19 +205,20 @@ function exibirLivros(livros) {
 //     console.error(`Ocorreu um erro ao excluir o livro da lista! ${response.status} - ${response.statusText}`)
 //   } else {
 //     console.warn("O livro foi excluído da lista com sucesso!")
-    
+  
 //     setTimeout(() => {
 //       location.reload()
 //     }, 3000)
 //   }
 // }
 
-
 // document.addEventListener("click", (e) => {
 //   const targetEl = e.target
-//   const parentEl = targetEl.closest("div")
+//   const parentEl = targetEl.closest("article")
 
 //   if(targetEl.classList.contains("concluir")) {
-//     parentEl.classList.toggle("concluido")
+//     // parentEl.classList.add("concluido")
+//     console.log(parentEl)
 //   }
 // })
+
