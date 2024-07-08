@@ -8,11 +8,22 @@ const buttonAdd = document.getElementById("buttonAdd")
 const listLivro = document.getElementById("listLivro")
 const editForm = document.getElementById("editForm")
 const btnEdit = document.getElementById("btnEdit")
+const btnCancel = document.getElementById("btnCancel")
+
 let editInput = document.getElementById("editInput")
 let url = "http://localhost:3000/livros"
 let livroId
 
 // let urlId = new URLSearchParams(window.location.search)
+
+// inputRange.type = "range"
+// inputRange.min = "0"
+// inputRange.max = "100"
+// editForm.append(inputRange)
+
+
+editForm.classList.remove("hiden")
+
 
 carregarLivros()
 
@@ -80,7 +91,8 @@ function exibirLivros(livros) {
     liElement.innerHTML = `<article> <p> ${livro.nomeLivro} </p> </article>`
     liElement.classList.add("livro")
     
-    listLivro.append(liElement, btnConcluir, btnEditar, btnExcluir, hr)
+    liElement.append(btnConcluir, btnEditar, btnExcluir)
+    listLivro.append(liElement, hr)
 
     // Excluir
 
@@ -109,14 +121,14 @@ function exibirLivros(livros) {
 
     // Editar
 
-    btnEditar.addEventListener('click', (e) => {
-      e.preventDefault()
+    // btnEditar.addEventListener('click', (e) => {
+    //   e.preventDefault()
 
-      editForm.classList.remove("hiden")
-      livroForm.classList.add("hiden")
+    //   editForm.classList.remove("hiden")
+    //   livroForm.classList.add("hiden")
 
-      editInput.value = livro.nomeLivro
-    })
+    //   editInput.value = livro.nomeLivro
+    // })
 
     // btnEdit.addEventListener('click', (e) => {
     //   e.preventDefault()
@@ -124,6 +136,9 @@ function exibirLivros(livros) {
     //   const livro = editInput.value
       
     //   editarLivro(livro)
+
+    //   editForm.classList.add("hiden")
+    //   livroForm.classList.remove("hiden")
       
     //   // livroInput.value = ""
 
@@ -137,18 +152,18 @@ function exibirLivros(livros) {
     //     },
     //     body: JSON.stringify({ nomeLivro })
     //   })
-
+  
     //   if(!response.ok) {
     //     console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
     //   } else {
     //     console.warn("O livro foi editado com sucesso!")
-
+  
     //     setTimeout(() => {
     //       location.reload()
     //     }, 2000);
     //   }
     // }
-
+    
     
   })
 
@@ -157,39 +172,39 @@ function exibirLivros(livros) {
 
 /* Editar */
 
-btnEdit.addEventListener('click', (e) => {
-  e.preventDefault()
+// btnEdit.addEventListener('click', (e) => {
+//   e.preventDefault()
   
-  const livro = editInput.value
+//   const livro = editInput.value
   
-  editarLivro(livro)
+//   editarLivro(livro)
 
-  editForm.classList.add("hiden")
-  livroForm.classList.remove("hiden")
+//   editForm.classList.add("hiden")
+//   livroForm.classList.remove("hiden")
   
-  // livroInput.value = ""
+//   // livroInput.value = ""
 
-})
+// })
 
-async function editarLivro(nomeLivro) {
-  const response = await fetch(`${url}/${livroId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ nomeLivro })
-  })
+// async function editarLivro(nomeLivro) {
+//   const response = await fetch(`${url}/${livro.id}`, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({ nomeLivro })
+//   })
 
-  if(!response.ok) {
-    console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
-  } else {
-    console.warn("O livro foi editado com sucesso!")
+//   if(!response.ok) {
+//     console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
+//   } else {
+//     console.warn("O livro foi editado com sucesso!")
 
-    setTimeout(() => {
-      location.reload()
-    }, 2000);
-  }
-}
+//     setTimeout(() => {
+//       location.reload()
+//     }, 2000);
+//   }
+// }
 
 /* Excluir */
 
@@ -212,13 +227,28 @@ async function editarLivro(nomeLivro) {
 //   }
 // }
 
-// document.addEventListener("click", (e) => {
-//   const targetEl = e.target
-//   const parentEl = targetEl.closest("article")
+document.addEventListener("click", (e) => {
+  const targetEl = e.target
+  const parentEl = targetEl.closest("li")
 
-//   if(targetEl.classList.contains("concluir")) {
-//     // parentEl.classList.add("concluido")
-//     console.log(parentEl)
-//   }
-// })
+  if(targetEl.classList.contains("concluir")) {
+    parentEl.classList.toggle("concluido")
+  }
 
+  if(targetEl.classList.contains("editar")) {
+    
+    editForm.classList.remove("hiden")
+    livroForm.classList.add("hiden")
+
+  }
+
+})
+
+/* Cancelar */
+
+btnCancel.addEventListener('click', (e) => {
+  e.preventDefault()
+
+  editForm.classList.add("hiden")
+  livroForm.classList.remove("hiden")
+})

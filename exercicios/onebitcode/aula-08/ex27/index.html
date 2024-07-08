@@ -23,11 +23,16 @@
   </form>
 
   <form id="editForm" class="hiden">
-    <input type="text" id="editInput" placeholder="Editar">
+    <h3>Informações da Leitura</h3>
+
+    <input type="range" min="0" max="100" id="editInput" placeholder="Editar">
+    <span id="valor">10</span>
 
     <button type="submit" id="btnEdit">
       <i class="fa-solid fa-check-double"></i>
     </button>
+
+    <button id="btnCancel">Cancelar</button>
   </form>
 
   <h2 class="123">Lista de Leitura</h2>
