@@ -7,7 +7,19 @@
 #nomeLivro, #editInput {
     width: 370px;
     margin-top: 5px;
+    margin-bottom: 10px;
     padding: .3rem .6rem;
+}
+
+#numPagLidas, #totalPag {
+    width: 180px;
+    margin-bottom: 10px;
+    padding: .3rem .6rem;
+}
+
+#totalPag {
+    width: 230px;
+    margin-top: 5px;
 }
 
 button {
@@ -31,9 +43,9 @@ button i {
     color: #102F5e;
     font-weight: bold;
     pointer-events: none;
-    /* display: flex;
+    display: flex;
     align-items: center;
-    justify-content: center; */
+    justify-content: center;
 }
 
 .hiden {
@@ -42,6 +54,8 @@ button i {
 
 .concluido {
     text-decoration: line-through;
+    color: green;
+    font-style: italic;
 }
 
 #btnEditar {

@@ -6,24 +6,15 @@ const livroForm = document.getElementById("livroForm")
 const livroInput = document.getElementById("nomeLivro")
 const buttonAdd = document.getElementById("buttonAdd")
 const listLivro = document.getElementById("listLivro")
-const editForm = document.getElementById("editForm")
+const pagLidasForm = document.getElementById("pagLidasForm")
+const pagInput = document.getElementById("totalPag")
 const btnEdit = document.getElementById("btnEdit")
 const btnCancel = document.getElementById("btnCancel")
 
-let editInput = document.getElementById("editInput")
 let url = "http://localhost:3000/livros"
 let livroId
 
 // let urlId = new URLSearchParams(window.location.search)
-
-// inputRange.type = "range"
-// inputRange.min = "0"
-// inputRange.max = "100"
-// editForm.append(inputRange)
-
-
-editForm.classList.remove("hiden")
-
 
 carregarLivros()
 
@@ -31,21 +22,25 @@ livroForm.addEventListener("submit", (event) => {
   event.preventDefault()
 
   const livro = livroInput.value
+  const paginas = pagInput.value
+  const pagLidas = "0"
 
-  addLivro(livro)
+  addLivro(livro, paginas, pagLidas)
 
   livroInput.value = ""
+  pagInput.value = ""
+
   livroInput.focus()
 
 })
 
-async function addLivro(nomeLivro) {
+async function addLivro(nome, paginas, pagLidas) {
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ nomeLivro })
+    body: JSON.stringify({ nome, paginas, pagLidas })
   })
 
   if(!response.ok) {
@@ -74,11 +69,13 @@ function exibirLivros(livros) {
     const btnEditar = document.createElement("button")
     const btnExcluir = document.createElement("button")
     const btnConcluir = document.createElement("button")
+    const btnInfo = document.createElement("button")
     livroId = livro.id
 
     btnEditar.innerHTML = '<i class="fa-solid fa-pen"></i>'
     btnExcluir.innerHTML = '<i class="fa-solid fa-xmark"></i>'
     btnConcluir.innerHTML = '<i class="fa-solid fa-check"></i>'
+    btnInfo.innerHTML = "Info"
 
     btnConcluir.classList.add("concluir")
     btnEditar.classList.add("editar")
@@ -87,11 +84,12 @@ function exibirLivros(livros) {
 
     btnEditar.style.marginRight = "5px"
     btnConcluir.style.marginRight = "5px"
+    btnExcluir.style.marginRight = "5px"
 
-    liElement.innerHTML = `<article> <p> ${livro.nomeLivro} </p> </article>`
+    liElement.innerHTML = `<article> <p> ${livro.nome} </p> </article>`
     liElement.classList.add("livro")
     
-    liElement.append(btnConcluir, btnEditar, btnExcluir)
+    liElement.append(btnConcluir, btnEditar, btnExcluir, btnInfo)
     listLivro.append(liElement, hr)
 
     // Excluir
@@ -124,10 +122,10 @@ function exibirLivros(livros) {
     // btnEditar.addEventListener('click', (e) => {
     //   e.preventDefault()
 
-    //   editForm.classList.remove("hiden")
+    //   pagLidasForm.classList.remove("hiden")
     //   livroForm.classList.add("hiden")
 
-    //   editInput.value = livro.nomeLivro
+    //   editInput.value = livro.nome
     // })
 
     // btnEdit.addEventListener('click', (e) => {
@@ -137,20 +135,20 @@ function exibirLivros(livros) {
       
     //   editarLivro(livro)
 
-    //   editForm.classList.add("hiden")
+    //   pagLidasForm.classList.add("hiden")
     //   livroForm.classList.remove("hiden")
       
     //   // livroInput.value = ""
 
     // })
 
-    // async function editarLivro(nomeLivro) {
+    // async function editarLivro(nome) {
     //   const response = await fetch(`${url}/${livro.id}`, {
     //     method: "PUT",
     //     headers: {
     //       "Content-Type": "application/json"
     //     },
-    //     body: JSON.stringify({ nomeLivro })
+    //     body: JSON.stringify({ nome })
     //   })
   
     //   if(!response.ok) {
@@ -179,20 +177,20 @@ function exibirLivros(livros) {
   
 //   editarLivro(livro)
 
-//   editForm.classList.add("hiden")
+//   pagLidasForm.classList.add("hiden")
 //   livroForm.classList.remove("hiden")
   
 //   // livroInput.value = ""
 
 // })
 
-// async function editarLivro(nomeLivro) {
+// async function editarLivro(nome) {
 //   const response = await fetch(`${url}/${livro.id}`, {
 //     method: "PUT",
 //     headers: {
 //       "Content-Type": "application/json"
 //     },
-//     body: JSON.stringify({ nomeLivro })
+//     body: JSON.stringify({ nome })
 //   })
 
 //   if(!response.ok) {
@@ -237,7 +235,7 @@ document.addEventListener("click", (e) => {
 
   if(targetEl.classList.contains("editar")) {
     
-    editForm.classList.remove("hiden")
+    pagLidasForm.classList.remove("hiden")
     livroForm.classList.add("hiden")
 
   }
@@ -249,6 +247,6 @@ document.addEventListener("click", (e) => {
 btnCancel.addEventListener('click', (e) => {
   e.preventDefault()
 
-  editForm.classList.add("hiden")
+  pagLidasForm.classList.add("hiden")
   livroForm.classList.remove("hiden")
 })

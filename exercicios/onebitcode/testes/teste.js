@@ -31,3 +31,17 @@ contagemAnoNovo()
 // let diaFalta = Math.floor((dataF - dataI) / (1000 * 60 * 60 *24))
 
 // alert (`Data Inicial: ${diasFaltam(dataI.toLocaleString)}`)
+
+
+/* Pegar o valor do input range em tempo real */
+
+// function rangeSlider() {
+//     rangeNumber.textContent = rangeInput.value
+  
+//     // rangeNumber - span
+//     // rangeInput - input
+  
+//     rangeInput.addEventListener('input', rangeSlider)
+//   }
+  
+//   rangeSlider()
