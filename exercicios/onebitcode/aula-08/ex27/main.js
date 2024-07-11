@@ -7,14 +7,20 @@ const livroInput = document.getElementById("nomeLivro")
 const buttonAdd = document.getElementById("buttonAdd")
 const listLivro = document.getElementById("listLivro")
 const pagLidasForm = document.getElementById("pagLidasForm")
-const pagInput = document.getElementById("totalPag")
+const pagTotalInput = document.getElementById("totalPag")
+const infoDiv = document.getElementById("infoDiv")
 const btnEdit = document.getElementById("btnEdit")
 const btnCancel = document.getElementById("btnCancel")
+const btnSairInfo = document.createElement("button")
+let pagLidasInput = document.getElementById("numPagLidas")
 
 let url = "http://localhost:3000/livros"
 let livroId
+let livroPagLidas
 
 // let urlId = new URLSearchParams(window.location.search)
+
+infoDiv.classList.add("hiden")
 
 carregarLivros()
 
@@ -22,13 +28,13 @@ livroForm.addEventListener("submit", (event) => {
   event.preventDefault()
 
   const livro = livroInput.value
-  const paginas = pagInput.value
+  const paginas = pagTotalInput.value
   const pagLidas = "0"
 
   addLivro(livro, paginas, pagLidas)
 
   livroInput.value = ""
-  pagInput.value = ""
+  pagTotalInput.value = ""
 
   livroInput.focus()
 
@@ -70,7 +76,9 @@ function exibirLivros(livros) {
     const btnExcluir = document.createElement("button")
     const btnConcluir = document.createElement("button")
     const btnInfo = document.createElement("button")
+
     livroId = livro.id
+    livroPagLidas = livro.pagLidas
 
     btnEditar.innerHTML = '<i class="fa-solid fa-pen"></i>'
     btnExcluir.innerHTML = '<i class="fa-solid fa-xmark"></i>'
@@ -80,6 +88,7 @@ function exibirLivros(livros) {
     btnConcluir.classList.add("concluir")
     btnEditar.classList.add("editar")
     btnExcluir.classList.add("excluir")
+    btnInfo.classList.add("infoLivro")
     
 
     btnEditar.style.marginRight = "5px"
@@ -119,52 +128,79 @@ function exibirLivros(livros) {
 
     // Editar
 
-    // btnEditar.addEventListener('click', (e) => {
-    //   e.preventDefault()
-
-    //   pagLidasForm.classList.remove("hiden")
-    //   livroForm.classList.add("hiden")
-
-    //   editInput.value = livro.nome
-    // })
-
-    // btnEdit.addEventListener('click', (e) => {
-    //   e.preventDefault()
+    btnEdit.addEventListener('click', (e) => {
+      e.preventDefault()
       
-    //   const livro = editInput.value
+      const pagLidas = pagLidasInput.value
+      const livro = livroInput.value
+      const paginas = pagTotalInput.value
       
-    //   editarLivro(livro)
-
-    //   pagLidasForm.classList.add("hiden")
-    //   livroForm.classList.remove("hiden")
-      
-    //   // livroInput.value = ""
-
-    // })
-
-    // async function editarLivro(nome) {
-    //   const response = await fetch(`${url}/${livro.id}`, {
-    //     method: "PUT",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({ nome })
-    //   })
-  
-    //   if(!response.ok) {
-    //     console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
-    //   } else {
-    //     console.warn("O livro foi editado com sucesso!")
-  
-    //     setTimeout(() => {
-    //       location.reload()
-    //     }, 2000);
-    //   }
-    // }
+      editarLivro(livro, paginas, pagLidas)
     
+      pagLidasForm.classList.add("hiden")
+      livroForm.classList.remove("hiden")
+      
+      // livroInput.value = ""
+    
+    })
+
+    // btnEditar.addEventListener('click', () => {
+    //   pagLidasInput.value = livroNome
+    // })
+
+    async function editarLivro(nome, paginas, pagLidas) {
+      const response = await fetch(`${url}/${livroId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ nome, paginas, pagLidas })
+      })
+    
+      if(!response.ok) {
+        console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
+      } else {
+        console.warn("O livro foi editado com sucesso!")
+    
+        setTimeout(() => {
+          location.reload()
+        }, 2000);
+      }
+    }
+
+
+
+
+    /* Ver informações do livro */
+
+    btnInfo.addEventListener('click', () => {
+      infoDiv.classList.remove("hiden")
+      livroForm.classList.add("hiden")
+      pagLidasForm.classList.add("hiden")
+
+      mostrarInfo()
+    })
+    
+    async function mostrarInfo() {
+      const response = await fetch(`${url}/${livro.id}`)
+      const dados = await response.json()
+    
+      console.log(dados)
+
+      infoDiv.innerHTML = 
+      `
+      <p> Nome do Livro: ${livro.nome} </p>
+      <p> Total de Páginas: ${livro.paginas} </p>
+      <p> Páginas Lidas: ${livro.pagLidas} </p>
+      <p>  </p>
+      `
+
+      btnSairInfo.innerHTML = "Sair"
+
+      infoDiv.appendChild(btnSairInfo)
+    }
     
   })
-
   
 }
 
@@ -173,7 +209,7 @@ function exibirLivros(livros) {
 // btnEdit.addEventListener('click', (e) => {
 //   e.preventDefault()
   
-//   const livro = editInput.value
+//   const livro = pagLidasInput.value
   
 //   editarLivro(livro)
 
@@ -184,13 +220,13 @@ function exibirLivros(livros) {
 
 // })
 
-// async function editarLivro(nome) {
-//   const response = await fetch(`${url}/${livro.id}`, {
+// async function editarLivro(nome, paginas, pagLidas) {
+//   const response = await fetch(`${url}/${livroId}`, {
 //     method: "PUT",
 //     headers: {
 //       "Content-Type": "application/json"
 //     },
-//     body: JSON.stringify({ nome })
+//     body: JSON.stringify({ nome, paginas, pagLidas })
 //   })
 
 //   if(!response.ok) {
@@ -225,6 +261,17 @@ function exibirLivros(livros) {
 //   }
 // }
 
+/* Obter Informações */
+
+// async function mostrarInfo() {
+//   const response = await fetch(`${url}/${livroId}`)
+//   const dados = await response.json()
+
+//   console.log(dados)
+// }
+
+/* Outros eventos */
+
 document.addEventListener("click", (e) => {
   const targetEl = e.target
   const parentEl = targetEl.closest("li")
@@ -234,11 +281,20 @@ document.addEventListener("click", (e) => {
   }
 
   if(targetEl.classList.contains("editar")) {
-    
     pagLidasForm.classList.remove("hiden")
     livroForm.classList.add("hiden")
+    infoDiv.classList.add("hiden")
 
+    pagLidasInput.value = livroPagLidas
   }
+
+  // if(targetEl.classList.contains("infoLivro")) {
+  //   infoDiv.classList.remove("hiden")
+  //   livroForm.classList.add("hiden")
+  //   pagLidasForm.classList.add("hiden")
+
+  //   mostrarInfo()
+  // }
 
 })
 
@@ -248,5 +304,12 @@ btnCancel.addEventListener('click', (e) => {
   e.preventDefault()
 
   pagLidasForm.classList.add("hiden")
+  livroForm.classList.remove("hiden")
+})
+
+/* Sair Informações */
+
+btnSairInfo.addEventListener('click', () => {
+  infoDiv.classList.add("hiden")
   livroForm.classList.remove("hiden")
 })
