@@ -17,6 +17,8 @@ let pagLidasInput = document.getElementById("numPagLidas")
 let url = "http://localhost:3000/livros"
 let livroId
 let livroPagLidas
+let livroNome
+let livroTotPag
 
 // let urlId = new URLSearchParams(window.location.search)
 
@@ -79,6 +81,8 @@ function exibirLivros(livros) {
 
     livroId = livro.id
     livroPagLidas = livro.pagLidas
+    livroNome = livro.nome
+    livroTotPag = livro.paginas
 
     btnEditar.innerHTML = '<i class="fa-solid fa-pen"></i>'
     btnExcluir.innerHTML = '<i class="fa-solid fa-xmark"></i>'
@@ -128,47 +132,49 @@ function exibirLivros(livros) {
 
     // Editar
 
-    btnEdit.addEventListener('click', (e) => {
-      e.preventDefault()
+    // btnEdit.addEventListener('click', (e) => {
+    //   e.preventDefault()
       
-      const pagLidas = pagLidasInput.value
-      const livro = livroInput.value
-      const paginas = pagTotalInput.value
+    //   const pagLidas = pagLidasInput.value
+    //   const nome = livro.nome
+    //   const paginas = livro.paginas
       
-      editarLivro(livro, paginas, pagLidas)
+    //   editarLivro(nome, paginas, pagLidas)
     
-      pagLidasForm.classList.add("hiden")
-      livroForm.classList.remove("hiden")
+    //   pagLidasForm.classList.add("hiden")
+    //   livroForm.classList.remove("hiden")
       
-      // livroInput.value = ""
+    //   // livroInput.value = ""
     
-    })
-
-    // btnEditar.addEventListener('click', () => {
-    //   pagLidasInput.value = livroNome
     // })
 
-    async function editarLivro(nome, paginas, pagLidas) {
-      const response = await fetch(`${url}/${livroId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ nome, paginas, pagLidas })
-      })
-    
-      if(!response.ok) {
-        console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
-      } else {
-        console.warn("O livro foi editado com sucesso!")
-    
-        setTimeout(() => {
-          location.reload()
-        }, 2000);
-      }
-    }
+    btnEditar.addEventListener('click', () => {
+      pagLidasForm.classList.remove("hiden")
+      livroForm.classList.add("hiden")
+      infoDiv.classList.add("hiden")
 
+      pagLidasInput.value = livro.pagLidas
+    })
 
+    // async function editarLivro(nome, paginas, pagLidas) {
+    //   const response = await fetch(`${url}/${livro.id}`, {
+    //     method: "PUT",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({ nome, paginas, pagLidas })
+    //   })
+    
+    //   if(!response.ok) {
+    //     console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
+    //   } else {
+    //     console.warn("O livro foi editado com sucesso!")
+    
+    //     setTimeout(() => {
+    //       location.reload()
+    //     }, 2000);
+    //   }
+    // }
 
 
     /* Ver informações do livro */
@@ -182,10 +188,7 @@ function exibirLivros(livros) {
     })
     
     async function mostrarInfo() {
-      const response = await fetch(`${url}/${livro.id}`)
-      const dados = await response.json()
-    
-      console.log(dados)
+      // const response = await fetch(`${url}/${livro.id}`)
 
       infoDiv.innerHTML = 
       `
@@ -206,60 +209,42 @@ function exibirLivros(livros) {
 
 /* Editar */
 
-// btnEdit.addEventListener('click', (e) => {
-//   e.preventDefault()
+btnEdit.addEventListener('click', (e) => {
+  e.preventDefault()
   
-//   const livro = pagLidasInput.value
+  const pagLidas = pagLidasInput.value
+  const nome = livroNome
+  const paginas = livroTotPag
   
-//   editarLivro(livro)
+  editarLivro(nome, paginas, pagLidas)
 
-//   pagLidasForm.classList.add("hiden")
-//   livroForm.classList.remove("hiden")
+  pagLidasForm.classList.add("hiden")
+  livroForm.classList.remove("hiden")
   
-//   // livroInput.value = ""
+  // livroInput.value = ""
 
-// })
+})
 
-// async function editarLivro(nome, paginas, pagLidas) {
-//   const response = await fetch(`${url}/${livroId}`, {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({ nome, paginas, pagLidas })
-//   })
+async function editarLivro(nome, paginas, pagLidas) {
+  const response = await fetch(`${url}/${livroId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ nome, paginas, pagLidas })
+  })
 
-//   if(!response.ok) {
-//     console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
-//   } else {
-//     console.warn("O livro foi editado com sucesso!")
+  if(!response.ok) {
+    console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
+  } else {
+    console.warn("O livro foi editado com sucesso!")
 
-//     setTimeout(() => {
-//       location.reload()
-//     }, 2000);
-//   }
-// }
+    setTimeout(() => {
+      location.reload()
+    }, 2000);
+  }
+}
 
-/* Excluir */
-
-// async function excluirLivro() {
-
-//   const response = await fetch(`${url}`, {
-//     method: "DELETE"
-//   })
-
-//   // console.log(livroId)
-
-//   if(!response.ok) {
-//     console.error(`Ocorreu um erro ao excluir o livro da lista! ${response.status} - ${response.statusText}`)
-//   } else {
-//     console.warn("O livro foi excluído da lista com sucesso!")
-  
-//     setTimeout(() => {
-//       location.reload()
-//     }, 3000)
-//   }
-// }
 
 /* Obter Informações */
 
@@ -280,20 +265,12 @@ document.addEventListener("click", (e) => {
     parentEl.classList.toggle("concluido")
   }
 
-  if(targetEl.classList.contains("editar")) {
-    pagLidasForm.classList.remove("hiden")
-    livroForm.classList.add("hiden")
-    infoDiv.classList.add("hiden")
-
-    pagLidasInput.value = livroPagLidas
-  }
-
-  // if(targetEl.classList.contains("infoLivro")) {
-  //   infoDiv.classList.remove("hiden")
+  // if(targetEl.classList.contains("editar")) {
+  //   pagLidasForm.classList.remove("hiden")
   //   livroForm.classList.add("hiden")
-  //   pagLidasForm.classList.add("hiden")
+  //   infoDiv.classList.add("hiden")
 
-  //   mostrarInfo()
+  //   // pagLidasInput.value = livroPagLidas
   // }
 
 })
