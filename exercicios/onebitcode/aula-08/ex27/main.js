@@ -19,6 +19,7 @@ let livroId
 let livroPagLidas
 let livroNome
 let livroTotPag
+let livroPagRest
 
 // let urlId = new URLSearchParams(window.location.search)
 
@@ -31,9 +32,10 @@ livroForm.addEventListener("submit", (event) => {
 
   const livro = livroInput.value
   const paginas = pagTotalInput.value
-  const pagLidas = "0"
+  const pagLidas = 0
+  const pagRestante = 0
 
-  addLivro(livro, paginas, pagLidas)
+  addLivro(livro, paginas, pagLidas, pagRestante)
 
   livroInput.value = ""
   pagTotalInput.value = ""
@@ -42,13 +44,13 @@ livroForm.addEventListener("submit", (event) => {
 
 })
 
-async function addLivro(nome, paginas, pagLidas) {
+async function addLivro(nome, paginas, pagLidas, pagRestante) {
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ nome, paginas, pagLidas })
+    body: JSON.stringify({ nome, paginas, pagLidas, pagRestante })
   })
 
   if(!response.ok) {
@@ -126,27 +128,37 @@ function exibirLivros(livros) {
         
         setTimeout(() => {
           location.reload()
-        }, 3000)
+        }, 1000)
       }
     }
 
     // Editar
 
-    // btnEdit.addEventListener('click', (e) => {
-    //   e.preventDefault()
+    btnEdit.addEventListener('click', (e) => {
+      e.preventDefault()
       
-    //   const pagLidas = pagLidasInput.value
-    //   const nome = livro.nome
-    //   const paginas = livro.paginas
+      const pagLidas = pagLidasInput.value
+      const nome = livro.nome
+      const paginas = livro.paginas
+      const pagRestante = (paginas - pagLidas)
+      // livroPagRest = pagRestante
       
-    //   editarLivro(nome, paginas, pagLidas)
+      editarLivro(nome, paginas, pagLidas, pagRestante)
     
-    //   pagLidasForm.classList.add("hiden")
-    //   livroForm.classList.remove("hiden")
+      pagLidasForm.classList.add("hiden")
+      livroForm.classList.remove("hiden")
+
+      if(livro.pagLidas === livro.paginas) {
+        console.warn(`A leitura do livro "${livroNome}" foi concluído! Click no botão "Concluir" para riscar o livro da lista!`)
+      } else if(livro.pagLidas > livro.paginas){
+        alert(`ERRO! Esse livro não tem ${livro.pagLidas} páginas! Tente Novamente!`)
+      } else if(pagLidasInput.value <= livro.pagLidas) {
+        alert(`ERRO! Número inválido!`)
+      }
       
-    //   // livroInput.value = ""
+      // livroInput.value = ""
     
-    // })
+    })
 
     btnEditar.addEventListener('click', () => {
       pagLidasForm.classList.remove("hiden")
@@ -193,9 +205,9 @@ function exibirLivros(livros) {
       infoDiv.innerHTML = 
       `
       <p> Nome do Livro: ${livro.nome} </p>
-      <p> Total de Páginas: ${livro.paginas} </p>
-      <p> Páginas Lidas: ${livro.pagLidas} </p>
-      <p>  </p>
+      <p> Total de Páginas: <strong>${livro.paginas}</strong> páginas </p>
+      <p> Páginas Lidas: <strong>${livro.pagLidas}</strong> páginas </p>
+      <p> Restam <strong>${livro.pagRestante}</strong> páginas para terminar o livro! </p>
       `
 
       btnSairInfo.innerHTML = "Sair"
@@ -209,38 +221,40 @@ function exibirLivros(livros) {
 
 /* Editar */
 
-btnEdit.addEventListener('click', (e) => {
-  e.preventDefault()
+// btnEdit.addEventListener('click', (e) => {
+//   e.preventDefault()
   
-  const pagLidas = pagLidasInput.value
-  const nome = livroNome
-  const paginas = livroTotPag
+//   const pagLidas = pagLidasInput.value
+//   const nome = livroNome
+//   const paginas = livroTotPag
   
-  editarLivro(nome, paginas, pagLidas)
+//   editarLivro(nome, paginas, pagLidas)
 
-  pagLidasForm.classList.add("hiden")
-  livroForm.classList.remove("hiden")
+//   pagLidasForm.classList.add("hiden")
+//   livroForm.classList.remove("hiden")
   
-  // livroInput.value = ""
+//   // livroInput.value = ""
 
-})
+// })
 
-async function editarLivro(nome, paginas, pagLidas) {
+async function editarLivro(nome, paginas, pagLidas, pagRestante) {
   const response = await fetch(`${url}/${livroId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ nome, paginas, pagLidas })
+    body: JSON.stringify({ nome, paginas, pagLidas, pagRestante })
   })
 
   if(!response.ok) {
     console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
+
   } else {
     console.warn("O livro foi editado com sucesso!")
 
     setTimeout(() => {
       location.reload()
+      
     }, 2000);
   }
 }

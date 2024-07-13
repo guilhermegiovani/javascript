@@ -1,22 +1,18 @@
 {
   "livros": [
     {
-      "nome": "Teste 2",
-      "paginas": "56",
-      "pagLidas": "14",
-      "id": "8396"
+      "id": "3b31",
+      "nome": "teste 3",
+      "paginas": "78",
+      "pagLidas": 0,
+      "pagRestante": 0
     },
     {
-      "nome": "teste 8",
-      "paginas": "456",
-      "pagLidas": "14",
-      "id": "aeb7"
-    },
-    {
-      "nome": "Teste 2",
-      "paginas": "56",
-      "pagLidas": "63",
-      "id": "ca70"
+      "nome": "Teste 1",
+      "paginas": "57",
+      "pagLidas": "20",
+      "pagRestante": 37,
+      "id": "6da2"
     }
   ]
 }
