@@ -21,6 +21,8 @@ let livroNome
 let livroTotPag
 let livroPagRest
 
+// let editarLivro
+
 // let urlId = new URLSearchParams(window.location.search)
 
 infoDiv.classList.add("hiden")
@@ -33,9 +35,9 @@ livroForm.addEventListener("submit", (event) => {
   const livro = livroInput.value
   const paginas = pagTotalInput.value
   const pagLidas = 0
-  const pagRestante = 0
+  const pagRestantes = 0
 
-  addLivro(livro, paginas, pagLidas, pagRestante)
+  addLivro(livro, paginas, pagLidas, pagRestantes)
 
   livroInput.value = ""
   pagTotalInput.value = ""
@@ -44,13 +46,13 @@ livroForm.addEventListener("submit", (event) => {
 
 })
 
-async function addLivro(nome, paginas, pagLidas, pagRestante) {
+async function addLivro(nome, paginas, pagLidas, pagRestantes) {
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ nome, paginas, pagLidas, pagRestante })
+    body: JSON.stringify({ nome, paginas, pagLidas, pagRestantes })
   })
 
   if(!response.ok) {
@@ -134,47 +136,51 @@ function exibirLivros(livros) {
 
     // Editar
 
-    btnEdit.addEventListener('click', (e) => {
-      e.preventDefault()
+    // btnEdit.addEventListener('click', (e) => {
+    //   // ou pagLidasForm
+    //   e.preventDefault()
       
-      const pagLidas = pagLidasInput.value
-      const nome = livro.nome
-      const paginas = livro.paginas
-      const pagRestante = (paginas - pagLidas)
-      // livroPagRest = pagRestante
+    //   let pagLidas = pagLidasInput.value
+    //   const nome = livro.nome
+    //   const paginas = livro.paginas
+    //   const pagRestantes = (paginas - pagLidas)
+    //   // livroPagRest = pagRestante
       
-      editarLivro(nome, paginas, pagLidas, pagRestante)
+    //   // if(pagLidasInput.value === paginas) {
+    //   //   console.warn(`A leitura do livro "${livroNome}" foi concluído! Click no botão "Concluir" para riscar o livro da lista!`)
+
+    //   // } else if(pagLidasInput.value > paginas){
+    //   //   console.log(`ERRO! Esse livro não tem ${pagLidasInput.value} páginas! Digite outro número!`)
+    //   //   pagLidas = livro.pagLidas
+
+    //   // } else if(pagLidasInput.value < livro.pagLidas) {
+    //   //   console.log(`ERRO! Digite um número maior que o anterior!`)
+    //   //   pagLidas = livro.pagLidas
+
+    //   // }
+      
+    //  editarLivro(nome, paginas, pagLidas, pagRestantes)
+      
+    //  pagLidasForm.classList.add("hiden")
+    //  livroForm.classList.remove("hiden")
     
-      pagLidasForm.classList.add("hiden")
-      livroForm.classList.remove("hiden")
+    //})
 
-      if(livro.pagLidas === livro.paginas) {
-        console.warn(`A leitura do livro "${livroNome}" foi concluído! Click no botão "Concluir" para riscar o livro da lista!`)
-      } else if(livro.pagLidas > livro.paginas){
-        alert(`ERRO! Esse livro não tem ${livro.pagLidas} páginas! Tente Novamente!`)
-      } else if(pagLidasInput.value <= livro.pagLidas) {
-        alert(`ERRO! Número inválido!`)
-      }
-      
-      // livroInput.value = ""
-    
-    })
+    // btnEditar.addEventListener('click', () => {
+    //   pagLidasForm.classList.remove("hiden")
+    //   livroForm.classList.add("hiden")
+    //   infoDiv.classList.add("hiden")
 
-    btnEditar.addEventListener('click', () => {
-      pagLidasForm.classList.remove("hiden")
-      livroForm.classList.add("hiden")
-      infoDiv.classList.add("hiden")
+    //   pagLidasInput.value = livro.pagLidas
+    // })
 
-      pagLidasInput.value = livro.pagLidas
-    })
-
-    // async function editarLivro(nome, paginas, pagLidas) {
+    // async function editarLivro(nome, paginas, pagLidas, pagRestantes) {
     //   const response = await fetch(`${url}/${livro.id}`, {
     //     method: "PUT",
     //     headers: {
     //       "Content-Type": "application/json"
     //     },
-    //     body: JSON.stringify({ nome, paginas, pagLidas })
+    //     body: JSON.stringify({ nome, paginas, pagLidas, pagRestantes })
     //   })
     
     //   if(!response.ok) {
@@ -185,6 +191,26 @@ function exibirLivros(livros) {
     //     setTimeout(() => {
     //       location.reload()
     //     }, 2000);
+    //   }
+    // }
+
+    // editarLivro = async (nome, paginas, pagLidas, pagRestantes) => {
+    //   const response = await fetch(`${url}/${livro.id}`, {
+    //     method: "PUT",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({ nome, paginas, pagLidas, pagRestantes })
+    //   })
+    
+    //   if(!response.ok) {
+    //     console.error(`Ocorreu um erro ao editar! ${response.status} - ${response.statusText}`)
+    //   } else {
+    //     console.warn("O livro foi editado com sucesso!")
+    
+    //     setTimeout(() => {
+    //       location.reload()
+    //     }, 5000);
     //   }
     // }
 
@@ -207,7 +233,7 @@ function exibirLivros(livros) {
       <p> Nome do Livro: ${livro.nome} </p>
       <p> Total de Páginas: <strong>${livro.paginas}</strong> páginas </p>
       <p> Páginas Lidas: <strong>${livro.pagLidas}</strong> páginas </p>
-      <p> Restam <strong>${livro.pagRestante}</strong> páginas para terminar o livro! </p>
+      <p> Restam <strong>${livro.pagRestantes}</strong> páginas para terminar o livro! </p>
       `
 
       btnSairInfo.innerHTML = "Sair"
@@ -221,29 +247,42 @@ function exibirLivros(livros) {
 
 /* Editar */
 
-// btnEdit.addEventListener('click', (e) => {
-//   e.preventDefault()
+pagLidasForm.addEventListener('submit', (e) => {
+  e.preventDefault()
   
-//   const pagLidas = pagLidasInput.value
-//   const nome = livroNome
-//   const paginas = livroTotPag
+  let pagLidas = pagLidasInput.value
+  const nome = livroNome
+  const paginas = livroTotPag
+  const pagRestantes = (paginas - pagLidas)
+  // livroPagRest = pagRestante
   
-//   editarLivro(nome, paginas, pagLidas)
+  // if(pagLidasInput.value === paginas) {
+  //   console.warn(`A leitura do livro "${livroNome}" foi concluído! Click no botão "Concluir" para riscar o livro da lista!`)
 
-//   pagLidasForm.classList.add("hiden")
-//   livroForm.classList.remove("hiden")
+  // } else if(pagLidasInput.value > paginas){
+  //   console.log(`ERRO! Esse livro não tem ${pagLidasInput.value} páginas! Digite outro número!`)
+  //   pagLidas = livro.pagLidas
+
+  // } else if(pagLidasInput.value < livroPagLidas) {
+  //   console.log(`ERRO! Digite um número maior que o anterior!`)
+  //   pagLidas = livro.pagLidas
+
+  // }
   
-//   // livroInput.value = ""
+  editarLivro(nome, paginas, pagLidas, pagRestantes)
+  
+  pagLidasForm.classList.add("hiden")
+  livroForm.classList.remove("hiden")
 
-// })
+})
 
-async function editarLivro(nome, paginas, pagLidas, pagRestante) {
+async function editarLivro(nome, paginas, pagLidas, pagRestantes) {
   const response = await fetch(`${url}/${livroId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ nome, paginas, pagLidas, pagRestante })
+    body: JSON.stringify({ nome, paginas, pagLidas, pagRestantes })
   })
 
   if(!response.ok) {
@@ -279,13 +318,13 @@ document.addEventListener("click", (e) => {
     parentEl.classList.toggle("concluido")
   }
 
-  // if(targetEl.classList.contains("editar")) {
-  //   pagLidasForm.classList.remove("hiden")
-  //   livroForm.classList.add("hiden")
-  //   infoDiv.classList.add("hiden")
+  if(targetEl.classList.contains("editar")) {
+    pagLidasForm.classList.remove("hiden")
+    livroForm.classList.add("hiden")
+    infoDiv.classList.add("hiden")
 
-  //   // pagLidasInput.value = livroPagLidas
-  // }
+    pagLidasInput.value = livroPagLidas
+  }
 
 })
 
