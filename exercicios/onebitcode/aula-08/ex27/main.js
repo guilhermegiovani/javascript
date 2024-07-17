@@ -261,11 +261,12 @@ pagLidasForm.addEventListener('submit', (e) => {
 
   // } else if(pagLidasInput.value > paginas){
   //   console.log(`ERRO! Esse livro não tem ${pagLidasInput.value} páginas! Digite outro número!`)
-  //   pagLidas = livro.pagLidas
+  //   pagLidas = livroPagLidas
 
   // } else if(pagLidasInput.value < livroPagLidas) {
   //   console.log(`ERRO! Digite um número maior que o anterior!`)
-  //   pagLidas = livro.pagLidas
+  //   pagLidas = livroPagLidas
+  //   pagRestantes = (paginas - pagLidas)
 
   // }
   

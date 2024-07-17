@@ -1,0 +1,13 @@
+{
+  "books": [
+    {
+      "id": "8091",
+      "title": "Jogo Vorazes",
+      "synopsis": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, distinctio. Quidem omnis asperiores iste consequatur dolor, aperiam perferendis ipsa nemo magni numquam ipsum quisquam impedit nulla, dignissimos laudantium iusto aspernatur",
+      "genre": "YA",
+      "pages": 600,
+      "progress": 456,
+      "completed": false
+    }
+  ]
+}
