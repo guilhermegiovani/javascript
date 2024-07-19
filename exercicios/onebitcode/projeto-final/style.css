@@ -136,6 +136,7 @@ button.selected {
 
 input, textarea {
     background-color: #242424;
+    color: #ffffff;
 }
 
 .inline-block {
