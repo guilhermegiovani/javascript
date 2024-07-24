@@ -1,12 +1,12 @@
-import { createQuestion, deleteQuestion, fetchQuestions, fetchResults } from "./api"
-import { button, div, h3, input, label } from "./elements"
+import { createQuestion, deleteQuestion, fetchQuestions, fetchResults, uptadeQuestion } from "./api"
+import { button, div, h3, input, label, option, select } from "./elements"
 
-export async function createEmptyQuestion() {
+export async function createEmptyQuestion(managerElement, results) {
     const question = await createQuestion()
-    const results = await fetchResults()
-    const questionsManager = document.getElementById("questionsManager")
+    // const results = await fetchResults()
+    // const questionsManager = document.getElementById("questionsManager")
 
-    createQuestionForm(questionsManager, question, results)
+    createQuestionForm(managerElement, question, results)
 }
 
 export async function loadQuestionsManager(managerElement) {
@@ -21,6 +21,19 @@ function createQuestionForm(managerElement, question, results) {
     const questionForm = document.createElement("form")
     questionForm.className = "questionForm"
 
+    questionForm.addEventListener("submit", async (e) => {
+        e.preventDefault()
+
+        const formData = new FormData(e.target)
+        const text = formData.get("text")
+
+        const points = {}
+        points.fullyDisagree = formData.get("fullyDisagree")
+
+        await uptadeQuestion(question.id, text)
+        alert("pergunta atualizada!")
+    })
+
     const questionFormTitle = h3(`Pergunta ${question.id}`)
     const questionTextLabel = label("Texto da Pergunta:", `question-${question.id}-text`)
     const questionTextInput = input("text", {
@@ -28,6 +41,36 @@ function createQuestionForm(managerElement, question, results) {
         name: "text",
         value: question.text
     })
+
+    const fullyDisagreeField = createAlternativeField({ 
+        labelText: "Discordo Completamente",
+        fieldId: `question-${question.id}-fully-disagree`,
+        fieldName: "fullyDisagree"
+    }, question, results)
+
+    const partiallyDisagreeField = createAlternativeField({ 
+        labelText: "Discordo Parcialmente",
+        fieldId: `question-${question.id}-partially-disagree`,
+        fieldName: "partiallyDisagree"
+    }, question, results)
+
+    const dontKnowField = createAlternativeField({ 
+        labelText: "Não Sei",
+        fieldId: `question-${question.id}-dont-know`,
+        fieldName: "dontKnow"
+    }, question, results)
+
+    const partiallyAgreeField = createAlternativeField({ 
+        labelText: "Concordo Parcialmente",
+        fieldId: `question-${question.id}-partially-agree`,
+        fieldName: "partiallyAgree"
+    }, question, results)
+
+    const fullyAgreeField = createAlternativeField({ 
+        labelText: "Concordo Completamente",
+        fieldId: `question-${question.id}-fully-agree`,
+        fieldName: "fullyAgree"
+    }, question, results)
 
     const buttonGroup = div({ className: "button-group" })
 
@@ -42,6 +85,39 @@ function createQuestionForm(managerElement, question, results) {
 
     buttonGroup.append(submitBtn, deleteBtn)
 
-    questionForm.append(questionFormTitle, questionTextLabel, questionTextInput, buttonGroup)
+    questionForm.append(
+        questionFormTitle,
+        questionTextLabel,
+        questionTextInput,
+        fullyDisagreeField,
+        partiallyDisagreeField,
+        dontKnowField,
+        partiallyAgreeField,
+        fullyAgreeField,
+        buttonGroup
+    )
+
     managerElement.append(questionForm)
+}
+
+// alternative = { labelText, id, name }
+function createAlternativeField(alternative, question, results) {
+    const container = div({ className: "inline-block" })
+
+    const fieldLabel = label(alternative.labelText, alternative.fieldId)
+    const fieldSelect = select(alternative.fieldId, alternative.fieldName)
+
+    const defaultOption = option("Selecione...", { selected: true, disabled: true })
+    fieldSelect.options.add(defaultOption)
+
+    results.forEach((result) => {
+        const resultOption = option(result.name, { 
+            value: result.id,
+            selected: question.points[alternative.fieldName] === result.id
+        })
+        fieldSelect.options.add(resultOption)
+    })
+
+    container.append(fieldLabel, fieldSelect)
+    return container
 }
