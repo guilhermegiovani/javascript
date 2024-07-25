@@ -2,14 +2,14 @@
   "questions": [
     {
       "text": "Teste de pergunta",
-      "id": "9f82",
       "points": {
-        "fullyDisagree": null,
-        "partiallyDisagree": null,
-        "dontKnow": null,
-        "partiallyAgree": null,
-        "fullyAgree": null
-      }
+        "fullyDisagree": 3,
+        "partiallyDisagree": 2,
+        "dontKnow": 1,
+        "partiallyAgree": 2,
+        "fullyAgree": 1
+      },
+      "id": "9f82"
     },
     {
       "id": "3963",
@@ -25,17 +25,17 @@
   ],
   "results": [
     {
-      "id": "1f83",
+      "id": "3",
       "name": "Frontend",
       "description": "Você seria um dev frontend"
     },
     {
-      "id": "b7a2",
+      "id": "2",
       "name": "Mobile",
       "description": "Você seria um dev mobile"
     },
     {
-      "id": "81c6",
+      "id": "1",
       "name": "Back-end",
       "description": "Você seria um dev backend"
     }

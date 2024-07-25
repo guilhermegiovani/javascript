@@ -28,9 +28,13 @@ function createQuestionForm(managerElement, question, results) {
         const text = formData.get("text")
 
         const points = {}
-        points.fullyDisagree = formData.get("fullyDisagree")
+        points.fullyDisagree = +formData.get("fullyDisagree")
+        points.partiallyDisagree = +formData.get("partiallyDisagree")
+        points.dontKnow = +formData.get("dontKnow")
+        points.partiallyAgree = +formData.get("partiallyAgree")
+        points.fullyAgree = +formData.get("fullyAgree")
 
-        await uptadeQuestion(question.id, text)
+        await uptadeQuestion(question.id, text, points)
         alert("pergunta atualizada!")
     })
 
