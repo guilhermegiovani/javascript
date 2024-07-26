@@ -35,7 +35,6 @@ function createQuestionForm(managerElement, question, results) {
         points.fullyAgree = +formData.get("fullyAgree")
 
         await uptadeQuestion(question.id, text, points)
-        alert("pergunta atualizada!")
     })
 
     const questionFormTitle = h3(`Pergunta ${question.id}`)

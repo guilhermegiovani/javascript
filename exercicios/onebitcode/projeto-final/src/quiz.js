@@ -1,4 +1,4 @@
-import { fetchQuestions } from "./api";
+import { fetchQuestions, findResult } from "./api";
 import { button, div, h2 } from "./elements";
 
 export async function loadQuestions(quizElement) {
@@ -15,6 +15,11 @@ export async function loadQuestions(quizElement) {
 
         // operador spread
         alternatives.append(...alternativeBtns)
+
+        if(index > 0) {
+            const goBackBtn = button("voltar à pergunta anterior", { onClick: scrollToPreviousQuestion })
+            questionContainer.append(goBackBtn)
+        }
 
         questionContainer.append(textElement, alternatives)
         quizElement.append(questionContainer)
@@ -43,9 +48,24 @@ async function calculateResults(questions, answers) {
         results.push(question.points[answer.answer]) // ex.: question.points.["fullyDisagree"]
     }
 
-    
+    const resultsCount = {}
+    // short-circuit evaluation
+    // resultsCount[2] = (resultCount[2] || 0)
+    results.forEach((result) => resultsCount[result] = (resultsCount[result] || 0) + 1)
 
-    console.log(results)
+    let winnerResult
+    let highesCount = 0
+
+    // for (let/const chave in objeto)
+    for (let result in resultsCount) {
+        if(resultsCount[result] > highesCount) {
+            winnerResult = result
+            highesCount = resultsCount[result]
+        }
+    }
+
+    const result = await findResult(winnerResult)
+    return result
 }
 
 // answer = { questionId: 1, answer: "fullyDisagree" }
@@ -106,4 +126,14 @@ function handleSelectAlternative(event) {
     })
 
     clickedBtn.classList.add("selected")
+
+    setTimeout(scrollToNextQuestion, 250)
+}
+
+function scrollToNextQuestion() {
+    window.scrollBy({ top: document.querySelector(".question").scrollHeight, behavior: "smooth" })
+}
+
+function scrollToPreviousQuestion() {
+    window.scrollBy({ top: -document.querySelector(".question").scrollHeight, behavior: "smooth" })
 }

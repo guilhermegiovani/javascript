@@ -105,7 +105,7 @@ button.selected {
     justify-content: space-between;
     gap: 2rem;
     flex-wrap: wrap;
-    padding: 0 2rem;
+    padding: 0 2rem 8rem;
     min-height: calc(100vh - 9rem);
     width: 100%;
 }
